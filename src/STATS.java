@@ -1,7 +1,7 @@
 public class STATS {
-    private static int lvl = 0;
-    private static int numZoms = 3;
-    private static int numSkels = 1;
+    private static int lvl;
+    private static int numZoms;
+    private static int numSkels;
 
 
     public static int getNumZoms() {
@@ -26,5 +26,19 @@ public class STATS {
 
     public static void setLvl(int lvl) {
         STATS.lvl = lvl;
+    }
+
+    public static void updateLevel(){
+        switch(lvl){
+            case 1:
+                setNumSkels(1);
+                setNumZoms(3);
+                break;
+
+            case 2:
+                setNumSkels(2);
+                setNumZoms(5);
+                break;
+        }
     }
 }

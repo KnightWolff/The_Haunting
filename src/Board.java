@@ -15,19 +15,20 @@ public class Board extends JPanel implements ActionListener {
     BufferedImage img;
     String name;
     Timer timer;
+    Game game;
     ArrayList<Sprite> entities;
     int paddingNum = 25;
 
 
-    public Board(){
-        if(Gamestates.MENU == true){
-            STATS.setLvl(0);
-        }
-        else if(Gamestates.PLAY1 == true) {
+    public Board( Game game){
+        if(Gamestates.PLAY1 == true) {
             STATS.setLvl(1);
         }
-        else{
+        else if(Gamestates.PLAY2 == true){
             STATS.setLvl(2);
+        }
+        else{
+            STATS.setLvl(0);
         }
         try {
             img = ImageIO.read(new File(getImageName()));
@@ -35,11 +36,14 @@ public class Board extends JPanel implements ActionListener {
             e.printStackTrace();
         }
         setPreferredSize(new Dimension(img.getWidth(), img.getHeight()));
+
+        this.game =game;
     }
 
     public void setup(){
+        STATS.updateLevel();
         entities = new ArrayList<>();
-        entities.add(0, new Player(paddingNum, getHeight()/2, 30, 60, 2, 95, 92, "Assets/Hero.png", this ));
+        entities.add(0, new Player(paddingNum, getHeight()/2, 30, 60, 2, 95, 92, "Assets/Hero.png", this, game));
         for(int i = 0; i <STATS.getNumZoms(); i++){
             entities.add(new Enemy(randomizer("width"), randomizer("height"), 28, 46, 1, 28,46, "Assets/Untitled.png",this));
         }
@@ -55,6 +59,7 @@ public class Board extends JPanel implements ActionListener {
         super.paintComponent(g);
         g.drawImage(img,0,0,this);
 
+        if(Gamestates.PLAY1 == true || Gamestates.PLAY2 == true)
         for(Sprite thing: entities){
             thing.paint(g);
         }
@@ -76,7 +81,10 @@ public class Board extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        for(Sprite thing: entities){
+            thing.move();
+        }
+        repaint();
     }
 
 

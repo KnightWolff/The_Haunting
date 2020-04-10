@@ -48,6 +48,11 @@ public abstract class Sprite {
         }
     }
 
+    public void move(){
+        x+=speed;
+        y+=speed;
+    }
+
     public BufferedImage getSprite(int xGrid, int yGrid, BufferedImage img) {
                 spriteSheet = img;
         return spriteSheet.getSubimage(xGrid * tileW, yGrid * tileH, tileW, tileH);
