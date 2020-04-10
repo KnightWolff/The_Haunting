@@ -16,6 +16,7 @@ public class Board extends JPanel implements ActionListener {
     String name;
     Timer timer;
     ArrayList<Sprite> entities;
+    int paddingNum = 25;
 
 
     public Board(){
@@ -38,10 +39,13 @@ public class Board extends JPanel implements ActionListener {
 
     public void setup(){
         entities = new ArrayList<>();
-        entities.add(0, new Player(getWidth()/2, getHeight()/2, 30, 60, 2, 95, 92, "Assets/Hero.png", this ));
-
-
-
+        entities.add(0, new Player(paddingNum, getHeight()/2, 30, 60, 2, 95, 92, "Assets/Hero.png", this ));
+        for(int i = 0; i <STATS.getNumZoms(); i++){
+            entities.add(new Enemy(randomizer("width"), randomizer("height"), 28, 46, 1, 28,46, "Assets/Untitled.png",this));
+        }
+        for(int i = 0; i <STATS.getNumSkels(); i++){
+            entities.add(new Enemy(randomizer("width"), randomizer("height"), 18, 47, 2, 18,47, "Assets/skel.png",this));
+        }
         timer = new Timer(1000/60, this);
         timer.start();
     }
@@ -73,5 +77,23 @@ public class Board extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+
+    private int randomizer(String area){
+        int place = 0;
+        if(area == "height"){
+            place = (int)(Math.random()*(getHeight()- paddingNum));
+            if(place > getHeight() - 60){
+                place =getHeight()-60;
+            }
+        }
+        else{
+            place =  (int)(Math.random()*(getWidth()- paddingNum));
+            if(place < getWidth()/3){
+                place =  (int)(Math.random()*(getWidth()- (getWidth()/3))+getWidth()/3);
+            }
+        }
+        return place;
     }
 }

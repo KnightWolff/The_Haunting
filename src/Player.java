@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Player extends Sprite {
-    BufferedImage    img;
+    BufferedImage img;
 
     {
         try {
@@ -14,8 +14,6 @@ public class Player extends Sprite {
             e.printStackTrace();
         }
     }
-
-    int tileW = 95, tileH = 92;
 
     public Player(int x, int y, int width, int height, int speed, int tileW, int tileH, String file, Board board){
         super(x, y, width, height, speed, tileW,tileH,file, board);
